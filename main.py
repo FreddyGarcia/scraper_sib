@@ -5,11 +5,11 @@ def convert_to_document(row):
     return Document(row['title'], row['src'])
 
 def main():
-    documents_dict = gather_documents_1()[:3]
+    documents_dict = gather_all_documents()
 
     # save documents
     documents_mod = list(map(convert_to_document, documents_dict))
-    new_documents = (documents_mod)
+    new_documents = remove_duplicates(documents_mod)
 
     session = Session()
 

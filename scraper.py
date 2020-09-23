@@ -29,7 +29,7 @@ def gather_documents_1():
     ls = list(map(lambda c: { 'title': c.text, 'src' : c.attrs['href']}, ls_A))
     return ls
 
-def gather_documents_regulations(normativa, link_index):
+def gather_documents_regulations(normativa):
     url = 'https://sib.gob.do/normativas-sib/' + normativa
     soup = get_soup(url)
 
@@ -41,7 +41,7 @@ def gather_documents_regulations(normativa, link_index):
         if not TDs: continue
 
         title = TDs[0].text.strip()
-        src = TDs[link_index].a.attrs['href']
+        src = TDs[-1].a.attrs['href']
         docs.append({
             'title' : title,
             'src' : src
@@ -51,19 +51,19 @@ def gather_documents_regulations(normativa, link_index):
 
 def gather_all_documents_regulations():
     regulations = (
-        ('leyes', 4),
-        ('reglamentos', 5),
-        ('cir%C2%ADcu%C2%ADlares_instructivos', 5),
-        ('manuales-sib', 4),
-        ('manual-de-requerimiento-de-información', 4),
-        ('manual-de-supervisión-basada-en-riesgos', 4),
-        ('documentos-en-consulta-pública', 5),
+        'leyes',
+        'reglamentos',
+        'cir%C2%ADcu%C2%ADlares_instructivos',
+        'manuales-sib',
+        'manual-de-requerimiento-de-información',
+        'manual-de-supervisión-basada-en-riesgos',
+        'documentos-en-consulta-pública'
     )
 
     ls = []
 
     for regulation in regulations:
-        _ls = gather_documents_regulations(*regulation)
+        _ls = gather_documents_regulations(regulation)
         ls.extend(_ls)
         # avoid ddos xd
         time.sleep(1)

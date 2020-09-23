@@ -11,12 +11,6 @@ engine = create_engine('sqlite:///db', echo=False)
 Session = sessionmaker(bind=engine)
 
 
-def download_file(url, path):
-    try:
-        request.urlretrieve(url, path)
-    except Exception as ex:
-        pass
-
 class Document(Base):
     __tablename__ = 'document'
 
@@ -68,8 +62,7 @@ class Document(Base):
             self.save()
         except Exception as ex:
             pass
-
-
+         
 def remove_duplicates(documents):
     saved_documents = Document.query().all()
     saved_hash = list(map(lambda c: c.hash_md5, saved_documents))
