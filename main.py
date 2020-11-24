@@ -2,7 +2,7 @@ from scraper import gather_all_documents, gather_documents_1
 from persistence import Document, Session, remove_duplicates
 
 def convert_to_document(row):
-    return Document(row['title'], row['src'])
+    return Document(row['title'], row['src'], row['p_date'])
 
 def main():
     documents_dict = gather_all_documents()
@@ -25,3 +25,4 @@ def main():
     for doc in new_documents:
         doc.download()
     
+main()
